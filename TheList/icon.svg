@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#3a0d0d"/>
+      <stop offset="100%" stop-color="#170404"/>
+    </radialGradient>
+    <linearGradient id="goldRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe985"/>
+      <stop offset="50%" stop-color="#d4a017"/>
+      <stop offset="100%" stop-color="#7a5c00"/>
+    </linearGradient>
+    <linearGradient id="parchment" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f2e4bd"/>
+      <stop offset="100%" stop-color="#d8c391"/>
+    </linearGradient>
+    <linearGradient id="key" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3b0"/>
+      <stop offset="45%" stop-color="#ffd200"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="248" fill="url(#goldRing)"/>
+  <circle cx="256" cy="256" r="222" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="222" fill="none" stroke="#ffe985" stroke-width="4" opacity="0.5"/>
+
+  <!-- keystone hanging behind the scroll -->
+  <g transform="translate(256,140) rotate(0)" opacity="0.95">
+    <rect x="-26" y="-46" width="52" height="92" rx="10" fill="url(#key)" stroke="#7a5c00" stroke-width="4"/>
+    <circle cx="0" cy="-20" r="12" fill="#3a0d0d"/>
+    <rect x="-6" y="-6" width="12" height="34" fill="#3a0d0d"/>
+  </g>
+
+  <!-- parchment scroll -->
+  <g transform="translate(256,300)">
+    <rect x="-108" y="-72" width="216" height="150" rx="14" fill="url(#parchment)" stroke="#5c4522" stroke-width="6"/>
+    <ellipse cx="-108" cy="-72" rx="14" ry="16" fill="#e8d6a3" stroke="#5c4522" stroke-width="6"/>
+    <ellipse cx="108" cy="78" rx="14" ry="16" fill="#e8d6a3" stroke="#5c4522" stroke-width="6"/>
+
+    <!-- list lines -->
+    <line x1="-78" y1="-38" x2="66" y2="-38" stroke="#5c4522" stroke-width="7" stroke-linecap="round"/>
+    <line x1="-78" y1="-6" x2="66" y2="-6" stroke="#5c4522" stroke-width="7" stroke-linecap="round"/>
+    <line x1="-78" y1="26" x2="66" y2="26" stroke="#5c4522" stroke-width="7" stroke-linecap="round"/>
+    <line x1="-78" y1="58" x2="30" y2="58" stroke="#5c4522" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- red "banned" strike across the scroll -->
+  <g stroke="#c81e1e" stroke-width="16" stroke-linecap="round">
+    <line x1="120" y1="188" x2="392" y2="368"/>
+  </g>
+  <circle cx="256" cy="278" r="140" fill="none" stroke="#c81e1e" stroke-width="16"/>
+</svg>
