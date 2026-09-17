@@ -1,0 +1,7 @@
+package-as: TheList
+
+ignore:
+  - CURSEFORGE.md
+  - icon.svg
+  - icon.png
+  - .gitignore
