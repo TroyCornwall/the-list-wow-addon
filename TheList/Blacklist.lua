@@ -1,11 +1,11 @@
--- Optional seed list for KeyWarden.
+-- Optional seed list for The List.
 --
 -- Entries here are copied into your blacklist ONE TIME, the first time this
--- addon loads on an account. After that, your additions/removals via /kw
+-- addon loads on an account. After that, your additions/removals via /tl
 -- live in SavedVariables and persist across addon updates on their own —
 -- you will rarely need to touch this file. It mainly exists to pre-populate
 -- a blacklist on a brand new install (e.g. a fresh PC) before you've had a
--- chance to run /kw add.
+-- chance to run /tl add.
 --
 -- This file ships as part of the addon package, so treat it as visible to
 -- anyone who ends up with the zip — that's fine for a private/unlisted
@@ -14,8 +14,8 @@
 -- list into an accusation list anyone can grab, with no verification and no
 -- way for the named player to contest it — the kind of content CurseForge
 -- pulls addons for. For a one-off share outside the private project, use
--- /kw export and send the string directly instead of editing this file.
+-- /tl export and send the string directly instead of editing this file.
 
-KeyWardenSeedBlacklist = {
+TheListSeedBlacklist = {
     -- ["charactername"] = "optional reason",
 }

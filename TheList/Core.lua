@@ -1,4 +1,4 @@
--- KeyWarden
+-- The List
 -- Watches the applicant list on your posted Group Finder ("Premade Groups")
 -- listing and warns you when someone on your personal blacklist applies to
 -- your Mythic+ key. Client-side only: it reads applicant info from the
@@ -86,13 +86,13 @@ end
 --------------------------------------------------------------------------
 
 local function InitDB()
-    KeyWardenDB = KeyWardenDB or {}
+    TheListDB = TheListDB or {}
     for k, v in pairs(defaults) do
-        if KeyWardenDB[k] == nil then
-            KeyWardenDB[k] = (type(v) == "table") and {} or v
+        if TheListDB[k] == nil then
+            TheListDB[k] = (type(v) == "table") and {} or v
         end
     end
-    db = KeyWardenDB
+    db = TheListDB
 
     -- One-time seed from the optional Blacklist.lua file shipped alongside
     -- this addon. After this runs once, everything lives in SavedVariables
@@ -100,8 +100,8 @@ local function InitDB()
     -- install that hasn't built up a blacklist yet.
     if not db.seededDefaults then
         db.seededDefaults = true
-        if KeyWardenSeedBlacklist then
-            for name, note in pairs(KeyWardenSeedBlacklist) do
+        if TheListSeedBlacklist then
+            for name, note in pairs(TheListSeedBlacklist) do
                 AddToBlacklist(name, note)
             end
         end
@@ -118,7 +118,7 @@ local alertActive = false
 local AdvanceQueue
 
 local function CreateAlertFrame()
-    local f = CreateFrame("Frame", "KeyWardenAlertFrame", UIParent, "BackdropTemplate")
+    local f = CreateFrame("Frame", "TheListAlertFrame", UIParent, "BackdropTemplate")
     f:SetSize(360, 92)
     f:SetPoint(db.point, UIParent, db.point, db.x, db.y)
     f:SetFrameStrata("FULLSCREEN_DIALOG")
@@ -211,7 +211,7 @@ end
 
 local function QueueAlert(name, note)
     local label = (note and note ~= true) and (" (%s)"):format(tostring(note)) or ""
-    print(("|cffff2222[KeyWarden]|r WARNING: %s%s just applied to your key!"):format(name, label))
+    print(("|cffff2222[The List]|r WARNING: %s%s just applied to your key!"):format(name, label))
 
     table.insert(alertQueue, {
         text = ("%s%s just signed up to your group.\nCheck the Premade Groups applicant list."):format(name, label),
@@ -297,8 +297,8 @@ end)
 -- Export / import
 --------------------------------------------------------------------------
 
-StaticPopupDialogs["KEYWARDEN_EXPORT"] = {
-    text = "KeyWarden blacklist export (select all, Ctrl+C):",
+StaticPopupDialogs["THELIST_EXPORT"] = {
+    text = "The List blacklist export (select all, Ctrl+C):",
     button1 = CLOSE,
     hasEditBox = true,
     editBoxWidth = 350,
@@ -323,9 +323,9 @@ StaticPopupDialogs["KEYWARDEN_EXPORT"] = {
 -- Slash commands
 --------------------------------------------------------------------------
 
-SLASH_KEYWARDEN1 = "/keywarden"
-SLASH_KEYWARDEN2 = "/kw"
-SlashCmdList["KEYWARDEN"] = function(msg)
+SLASH_THELIST1 = "/thelist"
+SLASH_THELIST2 = "/tl"
+SlashCmdList["THELIST"] = function(msg)
     msg = (msg or ""):trim()
     local cmd, rest = msg:match("^(%S*)%s*(.-)$")
     cmd = (cmd or ""):lower()
@@ -333,15 +333,15 @@ SlashCmdList["KEYWARDEN"] = function(msg)
     if cmd == "add" and rest ~= "" then
         local name, note = rest:match("^(%S+)%s*(.-)$")
         if AddToBlacklist(name, note) then
-            print(("|cffffd200[KeyWarden]|r Added '%s' to the blacklist."):format(name))
+            print(("|cffffd200[The List]|r Added '%s' to the blacklist."):format(name))
         else
-            print("|cffffd200[KeyWarden]|r Usage: /kw add <name> [note]")
+            print("|cffffd200[The List]|r Usage: /tl add <name> [note]")
         end
     elseif cmd == "remove" and rest ~= "" then
         if RemoveFromBlacklist(rest) then
-            print(("|cffffd200[KeyWarden]|r Removed '%s' from the blacklist."):format(rest))
+            print(("|cffffd200[The List]|r Removed '%s' from the blacklist."):format(rest))
         else
-            print(("|cffffd200[KeyWarden]|r '%s' wasn't on the blacklist."):format(rest))
+            print(("|cffffd200[The List]|r '%s' wasn't on the blacklist."):format(rest))
         end
     elseif cmd == "list" then
         local names = {}
@@ -350,40 +350,40 @@ SlashCmdList["KEYWARDEN"] = function(msg)
         end
         table.sort(names)
         if #names == 0 then
-            print("|cffffd200[KeyWarden]|r Blacklist is empty.")
+            print("|cffffd200[The List]|r Blacklist is empty.")
         else
-            print(("|cffffd200[KeyWarden]|r Blacklist (%d): %s"):format(#names, table.concat(names, ", ")))
+            print(("|cffffd200[The List]|r Blacklist (%d): %s"):format(#names, table.concat(names, ", ")))
         end
     elseif cmd == "export" then
         local str = ExportBlacklist()
         if str == "" then
-            print("|cffffd200[KeyWarden]|r Blacklist is empty, nothing to export.")
+            print("|cffffd200[The List]|r Blacklist is empty, nothing to export.")
         else
-            StaticPopup_Show("KEYWARDEN_EXPORT", nil, nil, str)
+            StaticPopup_Show("THELIST_EXPORT", nil, nil, str)
         end
     elseif cmd == "import" and rest ~= "" then
         local count = ImportBlacklist(rest, false)
-        print(("|cffffd200[KeyWarden]|r Imported %d name(s)."):format(count))
+        print(("|cffffd200[The List]|r Imported %d name(s)."):format(count))
     elseif cmd == "test" then
         QueueAlert("Testington", "test")
     elseif cmd == "on" then
         db.enabled = true
-        print("|cffffd200[KeyWarden]|r Enabled.")
+        print("|cffffd200[The List]|r Enabled.")
     elseif cmd == "off" then
         db.enabled = false
-        print("|cffffd200[KeyWarden]|r Disabled.")
+        print("|cffffd200[The List]|r Disabled.")
     elseif cmd == "sound" then
         db.sound = not db.sound
-        print("|cffffd200[KeyWarden]|r Alert sound " .. (db.sound and "on." or "off."))
+        print("|cffffd200[The List]|r Alert sound " .. (db.sound and "on." or "off."))
     else
-        print("|cffffd200[KeyWarden]|r Commands:")
-        print("  /kw add <name> [note] - add a player to the blacklist")
-        print("  /kw remove <name> - remove a player")
-        print("  /kw list - show the blacklist")
-        print("  /kw export - get a copyable string of your blacklist (names only)")
-        print("  /kw import <str> - merge in a string from /kw export")
-        print("  /kw test - fire a test alert")
-        print("  /kw on|off - enable/disable warnings")
-        print("  /kw sound - toggle alert sound")
+        print("|cffffd200[The List]|r Commands:")
+        print("  /tl add <name> [note] - add a player to the blacklist")
+        print("  /tl remove <name> - remove a player")
+        print("  /tl list - show the blacklist")
+        print("  /tl export - get a copyable string of your blacklist (names only)")
+        print("  /tl import <str> - merge in a string from /tl export")
+        print("  /tl test - fire a test alert")
+        print("  /tl on|off - enable/disable warnings")
+        print("  /tl sound - toggle alert sound")
     end
 end
