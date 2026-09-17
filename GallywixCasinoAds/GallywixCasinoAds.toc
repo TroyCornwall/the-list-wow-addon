@@ -1,9 +1,0 @@
-## Interface: 120105
-## Title: |cffffd200Gallywix|r Casino Ads
-## Notes: Pops up obnoxious fake "Gallywix's Casino" gambling ads while you're in combat. For trolling purposes during raid testing.
-## Author: Troy
-## Version: 1.0.0
-## SavedVariables: GallywixCasinoAdsDB
-## IconTexture: Interface\Icons\INV_Misc_Coin_17
-
-Core.lua
