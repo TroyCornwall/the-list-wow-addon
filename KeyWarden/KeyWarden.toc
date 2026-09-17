@@ -1,0 +1,10 @@
+## Interface: 120105
+## Title: |cffffd200KeyWarden|r
+## Notes: Warns you when someone on your blacklist applies to your Mythic+ keystone group.
+## Author: Troy
+## Version: 1.0.0
+## SavedVariables: KeyWardenDB
+## IconTexture: Interface\Icons\INV_Misc_Key_03
+
+Blacklist.lua
+Core.lua
